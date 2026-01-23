@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.beforeyougo.ui.home.HomeFragment"
+        android:label="Checklists">
+        <action
+            android:id="@+id/action_home_to_detail"
+            app:destination="@id/checklistDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/checklistDetailFragment"
+        android:name="com.example.beforeyougo.ui.detail.ChecklistDetailFragment"
+        android:label="Checklist">
+        <argument
+            android:name="checklistId"
+            app:argType="long" />
+    </fragment>
+
+</navigation>
