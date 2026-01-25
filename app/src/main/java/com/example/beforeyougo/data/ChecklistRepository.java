@@ -75,10 +75,23 @@ public class ChecklistRepository {
 
     public void createChecklist(String name, IdCallback callback) {
         AppExecutors.getInstance().db().execute(() -> {
+            //creates a new checklist entity object to be inserted into database
             long id = dao.insertChecklist(new ChecklistEntity(name, false));
             // callback back on main thread:
+            // gets called back to main thread because UI updates need to take place
+            //starting a new fragment
             new android.os.Handler(android.os.Looper.getMainLooper()).post(() -> callback.onId(id));
         });
     }
+
+    //Add new checklists item method..
+
+    public void addItem(long checklistId, String text, int sortOrder) {
+        AppExecutors.getInstance().db().execute(() -> {
+            dao.insertItem(new ChecklistItemEntity(checklistId, text, sortOrder));
+            dao.touchChecklist(checklistId, System.currentTimeMillis()); // optional
+        });
+    }
+
 
 }

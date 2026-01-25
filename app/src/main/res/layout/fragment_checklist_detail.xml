@@ -37,6 +37,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="Add checklist item"
+            android:layout_margin="16dp"
+            app:srcCompat="@android:drawable/ic_input_add"
+            />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnReset"
             android:layout_width="wrap_content"

@@ -40,4 +40,10 @@ public class ChecklistDetailViewModel extends AndroidViewModel {
     public void touch(long checklistId) {
         repo.touchChecklist(checklistId);
     }
+
+    //add item method which calls add item method in checklist repository
+    public void addItem(long checklistId, String text, int sortOrder) {
+        repo.addItem(checklistId, text, sortOrder);
+    }
+
 }
