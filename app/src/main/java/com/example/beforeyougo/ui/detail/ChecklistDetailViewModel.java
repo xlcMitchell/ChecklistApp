@@ -46,4 +46,8 @@ public class ChecklistDetailViewModel extends AndroidViewModel {
         repo.addItem(checklistId, text, sortOrder);
     }
 
+    public void deleteItem(long itemId){
+        repo.deleteItem(itemId);
+    }
+
 }

@@ -16,6 +16,7 @@ public class ChecklistItemAdapter extends RecyclerView.Adapter<ChecklistItemAdap
 
     public interface OnItemClick {
         void onItemClick(ChecklistItemEntity item);
+        void onItemDelete(ChecklistItemEntity item);
     }
 
     private final OnItemClick onItemClick;
@@ -48,6 +49,8 @@ public class ChecklistItemAdapter extends RecyclerView.Adapter<ChecklistItemAdap
         holder.b.checkbox.setChecked(item.isChecked);
 
         holder.b.checkbox.setOnCheckedChangeListener((buttonView, isChecked) -> onItemClick.onItemClick(item));
+        holder.b.btnDelete.setOnClickListener(v -> onItemClick.onItemDelete(item));
+
     }
 
     @Override

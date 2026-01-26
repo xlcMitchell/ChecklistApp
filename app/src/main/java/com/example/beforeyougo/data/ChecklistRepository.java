@@ -93,5 +93,11 @@ public class ChecklistRepository {
         });
     }
 
+    public void deleteItem(long itemId){
+        AppExecutors.getInstance().db().execute(()->{
+               dao.deleteItem(itemId);
+        });
+    }
+
 
 }

@@ -39,6 +39,9 @@ public interface ChecklistDao {
     @Insert
     long insertItem(ChecklistItemEntity item);
 
+    @Query("DELETE FROM checklist_items WHERE id = :itemId")
+    void deleteItem(long itemId);
+
     @Update
     void updateChecklist(ChecklistEntity checklist);
 

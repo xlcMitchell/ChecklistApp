@@ -1,6 +1,7 @@
 package com.example.beforeyougo.ui.detail;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.beforeyougo.R;
+import com.example.beforeyougo.data.ChecklistItemEntity;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import com.example.beforeyougo.databinding.FragmentChecklistDetailBinding;
@@ -37,8 +39,22 @@ public class ChecklistDetailFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         vm = new ViewModelProvider(this).get(ChecklistDetailViewModel.class);
         checklistId = requireArguments().getLong("checklistId");
+        //lamba style not used because not compatible with multiple call back methods
+        ChecklistItemAdapter adapter =
+                new ChecklistItemAdapter(new ChecklistItemAdapter.OnItemClick() {
+                    @Override
+                    public void onItemClick(ChecklistItemEntity item) {
 
-        ChecklistItemAdapter adapter = new ChecklistItemAdapter(item -> vm.toggleItem(item.id));
+                    }
+
+                    @Override
+                    public void onItemDelete(ChecklistItemEntity item) {
+                         //call view model method here to delete check list item
+                        //possibly get id from the item??
+                        Log.d("itemID",String.valueOf(item.id));
+                        vm.deleteItem(item.id);
+                    }
+                });
 
         binding.recyclerItems.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.recyclerItems.setAdapter(adapter);
@@ -79,6 +95,8 @@ public class ChecklistDetailFragment extends Fragment {
                     })
                     .show();
         });
+
+
 
     }
 
