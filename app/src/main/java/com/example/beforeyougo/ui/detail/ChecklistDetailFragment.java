@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.beforeyougo.R;
@@ -44,7 +45,7 @@ public class ChecklistDetailFragment extends Fragment {
                 new ChecklistItemAdapter(new ChecklistItemAdapter.OnItemClick() {
                     @Override
                     public void onItemClick(ChecklistItemEntity item) {
-
+                            vm.toggleItem(item.id);
                     }
 
                     @Override
@@ -94,6 +95,10 @@ public class ChecklistDetailFragment extends Fragment {
                        vm.addItem(checklistId,name,nextSortOrder);
                     })
                     .show();
+        });
+
+        binding.btnBack.setOnClickListener(v ->{
+            NavHostFragment.findNavController(this).navigateUp();
         });
 
 
