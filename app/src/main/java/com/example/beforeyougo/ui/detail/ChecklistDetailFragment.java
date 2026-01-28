@@ -46,6 +46,7 @@ public class ChecklistDetailFragment extends Fragment {
                     @Override
                     public void onItemClick(ChecklistItemEntity item) {
                             vm.toggleItem(item.id);
+
                     }
 
                     @Override
@@ -72,6 +73,20 @@ public class ChecklistDetailFragment extends Fragment {
         vm.observeItems(checklistId).observe(getViewLifecycleOwner(), items -> {
             adapter.submitList(items);
             nextSortOrder = (items == null) ? 0 : items.size();
+
+            boolean completed = items != null && !items.isEmpty();
+            if (items != null) {
+                for (ChecklistItemEntity it : items) {
+                    if (!it.isChecked) { // uses your actual field name
+                        completed = false;
+                        break;
+                    }
+                }
+            }
+
+            binding.recyclerItems.setVisibility(completed ? View.GONE : View.VISIBLE);
+            binding.completedState.setVisibility(completed ? View.VISIBLE : View.GONE);
+            binding.fabAdd.setVisibility(completed ? View.GONE : View.VISIBLE);
         });
 
         binding.btnReset.setOnClickListener(v -> new MaterialAlertDialogBuilder(requireContext())
