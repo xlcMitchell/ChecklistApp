@@ -33,15 +33,105 @@ public class ChecklistRepository {
         AppExecutors.getInstance().db().execute(() -> {
             int count = dao.getUserChecklistCount();
             if (count > 0) return; // already has data, don’t seed again
-            long checklistId = dao.insertChecklist(new ChecklistEntity("Weekend Trip", false));
-            List<ChecklistItemEntity> items = new ArrayList<>();
-            items.add(new ChecklistItemEntity(checklistId, "Phone charger", 0));
-            items.add(new ChecklistItemEntity(checklistId, "Toothbrush", 1));
-            items.add(new ChecklistItemEntity(checklistId, "Wallet / keys", 2));
-            items.add(new ChecklistItemEntity(checklistId, "Jacket", 3));
-            dao.insertItems(items);
+
+            // 1️⃣ Weekend Trip
+            long weekendId = dao.insertChecklist(
+                    new ChecklistEntity("Weekend Trip", false)
+            );
+            dao.insertItems(makeItems(weekendId,
+                    "Clothes",
+                    "Toiletries",
+                    "Toothbrush",
+                    "Phone charger",
+                    "Wallet",
+                    "Keys",
+                    "Sunglasses",
+                    "Medication"
+            ));
+
+            // 2️⃣ Camping Trip
+            long campingId = dao.insertChecklist(
+                    new ChecklistEntity("Camping Trip", false)
+            );
+            dao.insertItems(makeItems(campingId,
+                    "Tent",
+                    "Pegs",
+                    "Sleeping bag",
+                    "Pillow",
+                    "Torch / headlamp",
+                    "Power bank",
+                    "Cooking gear",
+                    "Food",
+                    "Water",
+                    "Warm clothes",
+                    "Rain jacket",
+                    "First aid kit",
+                    "Sunscreen",
+                    "Insect repellent"
+            ));
+
+            // 3️⃣ Flight (Carry-on)
+            long flightId = dao.insertChecklist(
+                    new ChecklistEntity("Flight (Carry-on)", false)
+            );
+            dao.insertItems(makeItems(flightId,
+                    "Passport",
+                    "Boarding pass",
+                    "Wallet",
+                    "Phone",
+                    "Phone charger",
+                    "Headphones",
+                    "Power bank",
+                    "Travel pillow",
+                    "Snacks",
+                    "Hand sanitiser",
+                    "Reusable water bottle",
+                    "Jacket / hoodie"
+            ));
+
+            // 4️⃣ Gym Bag
+            long gymId = dao.insertChecklist(
+                    new ChecklistEntity("Gym Bag", false)
+            );
+            dao.insertItems(makeItems(gymId,
+                    "Gym clothes",
+                    "Training shoes",
+                    "Towel",
+                    "Water bottle",
+                    "Headphones",
+                    "Deodorant",
+                    "Lock",
+                    "Change of clothes",
+                    "Protein / snack"
+            ));
+
+            // 5️⃣ Work / School Bag
+            long workId = dao.insertChecklist(
+                    new ChecklistEntity("Work / School Bag", false)
+            );
+            dao.insertItems(makeItems(workId,
+                    "Laptop",
+                    "Laptop charger",
+                    "Notebook",
+                    "Pens",
+                    "Lunch",
+                    "Water bottle",
+                    "Headphones",
+                    "Phone charger",
+                    "ID / access card"
+            ));
         });
     }
+
+    private List<ChecklistItemEntity> makeItems(long checklistId, String... names) {
+        List<ChecklistItemEntity> items = new ArrayList<>();
+        for (int i = 0; i < names.length; i++) {
+            items.add(new ChecklistItemEntity(checklistId, names[i], i));
+        }
+        return items;
+    }
+
+
 
     public void toggleItem(long itemId) {
         AppExecutors.getInstance().db().execute(() ->
