@@ -1,6 +1,7 @@
 package com.example.beforeyougo.ui.home;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -57,6 +58,8 @@ public class ChecklistSummaryAdapter extends RecyclerView.Adapter<ChecklistSumma
         holder.b.subtitle.setText(s.checkedCount + " / " + s.totalCount + " checked");
         holder.b.getRoot().setOnClickListener(v -> onClick.onClick(s));
         holder.b.btnDelete.setOnClickListener(v -> onClick.onDelete(s));
+        boolean complete = s.checkedCount > 0 && s.checkedCount == s.totalCount;
+        holder.b.imgCompleted.setVisibility(complete? View.VISIBLE : View.GONE);
     }
 
     @Override
